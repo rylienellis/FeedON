@@ -12,21 +12,21 @@ import { SimpleRenderer } from "esri/renderers";
 import { updateGrid } from "./heatmapChart";
 
 import Expand = require("esri/widgets/Expand");
-import { durations, seasons } from "./constants";
+import { months, years } from "./constants";
 
 ( async () => {
 
   const layer = new FeatureLayer({
     portalItem: {
-      id: "f9e348953b3848ec8b69964d5bceae02"
+      id: "3a8aae65f6d64c9dacce3049ebe32f0c"
     },
-    outFields: [ "DurationClass", "SEASON" ]
+    outFields: [ "MonthName", "YEAR" ]
   });
 
   const countiesLayer = new FeatureLayer({
     title: "counties",
     portalItem: {
-      id: "7566e0221e5646f99ea249a197116605"
+      id: "3a8aae65f6d64c9dacce3049ebe32f0c"
     },
     popupTemplate: null,
     opacity: 0,
@@ -46,7 +46,7 @@ import { durations, seasons } from "./constants";
   const view = new MapView({
     map: map,
     container: "viewDiv",
-    center: [ -97.20977281984334, 40.29693762632632 ],
+    center: [ -85, 50 ],
     zoom: 4,
     highlightOptions: {
       color: "#262626",
@@ -56,21 +56,21 @@ import { durations, seasons } from "./constants";
   });
 
   await view.when();
-  const seasonsElement = document.getElementById("seasons-filter");
-  seasonsElement.style.visibility = "visible";
+  const yearsElement = document.getElementById("years-filter");
+  yearsElement.style.visibility = "visible";
   const chartExpand = new Expand({
     view,
     content: document.getElementById("chartDiv"),
     expandIconClass: "esri-icon-chart",
     group: "top-left"
   });
-  const seasonsExpand = new Expand({
+  const yearsExpand = new Expand({
     view,
-    content: seasonsElement,
+    content: yearsElement,
     expandIconClass: "esri-icon-filter",
     group: "top-left"
   });
-  view.ui.add(seasonsExpand, "top-left");
+  view.ui.add(yearsExpand, "top-left");
   view.ui.add(chartExpand, "top-left");
   view.ui.add("titleDiv", "top-right");
 
@@ -80,26 +80,26 @@ import { durations, seasons } from "./constants";
   const layerStats = await queryLayerStatistics(layer);
   updateGrid(layerStats, layerView);
   
-  seasonsElement.addEventListener("click", filterBySeason);
-  const seasonsNodes = document.querySelectorAll(`.season-item`);
+  yearsElement.addEventListener("click", filterByYear);
+  const yearsNodes = document.querySelectorAll(`.year-item`);
 
-  function filterBySeason (event: any) {
-    const selectedSeason = event.target.getAttribute("data-season");
-    seasonsNodes.forEach( (node:HTMLDivElement) => {
-      const season = node.innerText;
-      if(season !== selectedSeason){
-        if(node.classList.contains("visible-season")) {
-          node.classList.remove("visible-season");
+  function filterByYear (event: any) {
+    const selectedYear = event.target.getAttribute("data-year");
+    yearsNodes.forEach( (node:HTMLDivElement) => {
+      const year = node.innerText;
+      if(year !== selectedYear){
+        if(node.classList.contains("visible-year")) {
+          node.classList.remove("visible-year");
         }
       } else {
-        if(!node.classList.contains("visible-season")) {
-          node.classList.add("visible-season");
+        if(!node.classList.contains("visible-year")) {
+          node.classList.add("visible-year");
         }
       }
     });
 
     layerView.filter = new FeatureFilter({
-      where: `Season = '${selectedSeason}'`
+      where: `Year = '${selectedYear}'`
     });
   }
 
@@ -109,7 +109,7 @@ import { durations, seasons } from "./constants";
     }
   }
 
-  seasonsExpand.watch("expanded", resetOnCollapse);
+  yearsExpand.watch("expanded", resetOnCollapse);
   chartExpand.watch("expanded", resetOnCollapse);
 
   let highlight:any = null;
@@ -168,7 +168,7 @@ import { durations, seasons } from "./constants";
         statisticType: "count"
       })
     ];
-    query.groupByFieldsForStatistics = [ "SEASON + '-' + DurationClass" ];
+    query.groupByFieldsForStatistics = [ "YEAR + '-' + MonthName" ];
     query.geometry = geometry;
     query.distance = distance;
     query.units = units;
@@ -178,11 +178,11 @@ import { durations, seasons } from "./constants";
 
     const responseChartData = queryResponse.features.map( feature => {
       const timeSpan = feature.attributes["EXPR_1"].split("-");
-      const season = timeSpan[0];
-      const duration = timeSpan[1];
+      const year = timeSpan[0];
+      const month = timeSpan[1];
       return {
-        duration,
-        season, 
+        month,
+        year, 
         value: feature.attributes.value
       };
     });
@@ -198,17 +198,17 @@ import { durations, seasons } from "./constants";
         statisticType: "count"
       })
     ];
-    query.groupByFieldsForStatistics = [ "SEASON + '-' + DurationClass" ];
+    query.groupByFieldsForStatistics = [ "YEAR + '-' + MonthName" ];
 
     const queryResponse = await layer.queryFeatures(query);
 
     const responseChartData = queryResponse.features.map( feature => {
       const timeSpan = feature.attributes["EXPR_1"].split("-");
-      const season = timeSpan[0];
-      const duration = timeSpan[1];
+      const year = timeSpan[0];
+      const month = timeSpan[1];
       return {
-        duration,
-        season, 
+        month,
+        year, 
         value: feature.attributes.value
       };
     });
@@ -218,11 +218,11 @@ import { durations, seasons } from "./constants";
   function createDataObjects(data: StatisticsResponse[]): ChartData[] {
     let formattedChartData: ChartData[] = [];
 
-    durations.forEach( (duration, t) => {
-      seasons.forEach( (season, s) => {
+    months.forEach( (month, s) => {
+      years.forEach( (year, t) => {
 
         const matches = data.filter( datum => {
-          return datum.season === season && datum.duration === duration;
+          return datum.year === year && datum.month === month;
         });
 
         formattedChartData.push({
@@ -247,8 +247,8 @@ import { durations, seasons } from "./constants";
       highlight.remove();
       highlight = null;
     }
-    seasonsNodes.forEach( (node:HTMLDivElement) => {
-      node.classList.add("visible-season");
+    yearsNodes.forEach( (node:HTMLDivElement) => {
+      node.classList.add("visible-year");
     });
     updateGrid(layerStats, layerView, true);
   }
