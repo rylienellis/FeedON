@@ -38,23 +38,23 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
     var _this = this;
     Object.defineProperty(exports, "__esModule", { value: true });
     (function () { return __awaiter(_this, void 0, void 0, function () {
-        function filterBySeason(event) {
-            var selectedSeason = event.target.getAttribute("data-season");
-            seasonsNodes.forEach(function (node) {
-                var season = node.innerText;
-                if (season !== selectedSeason) {
-                    if (node.classList.contains("visible-season")) {
-                        node.classList.remove("visible-season");
+        function filterByYear(event) {
+            var selectedYear = event.target.getAttribute("data-year");
+            yearsNodes.forEach(function (node) {
+                var year = node.innerText;
+                if (year !== selectedYear) {
+                    if (node.classList.contains("visible-year")) {
+                        node.classList.remove("visible-year");
                     }
                 }
                 else {
-                    if (!node.classList.contains("visible-season")) {
-                        node.classList.add("visible-season");
+                    if (!node.classList.contains("visible-year")) {
+                        node.classList.add("visible-year");
                     }
                 }
             });
             layerView.filter = new FeatureFilter({
-                where: "Season = '" + selectedSeason + "'"
+                where: "Year = '" + selectedYear + "'"
             });
         }
         function resetOnCollapse(expanded) {
@@ -117,7 +117,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                     statisticType: "count"
                                 })
                             ];
-                            query.groupByFieldsForStatistics = ["SEASON + '-' + DurationClass"];
+                            query.groupByFieldsForStatistics = ["YEAR + '-' + MonthName"];
                             query.geometry = geometry;
                             query.distance = distance;
                             query.units = units;
@@ -127,11 +127,11 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             queryResponse = _a.sent();
                             responseChartData = queryResponse.features.map(function (feature) {
                                 var timeSpan = feature.attributes["EXPR_1"].split("-");
-                                var season = timeSpan[0];
-                                var duration = timeSpan[1];
+                                var year = timeSpan[0];
+                                var month = timeSpan[1];
                                 return {
-                                    duration: duration,
-                                    season: season,
+                                    month: month,
+                                    year: year,
                                     value: feature.attributes.value
                                 };
                             });
@@ -154,17 +154,17 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                     statisticType: "count"
                                 })
                             ];
-                            query.groupByFieldsForStatistics = ["SEASON + '-' + DurationClass"];
+                            query.groupByFieldsForStatistics = ["YEAR + '-' + MonthName"];
                             return [4 /*yield*/, layer.queryFeatures(query)];
                         case 1:
                             queryResponse = _a.sent();
                             responseChartData = queryResponse.features.map(function (feature) {
                                 var timeSpan = feature.attributes["EXPR_1"].split("-");
-                                var season = timeSpan[0];
-                                var duration = timeSpan[1];
+                                var year = timeSpan[0];
+                                var month = timeSpan[1];
                                 return {
-                                    duration: duration,
-                                    season: season,
+                                    month: month,
+                                    year: year,
                                     value: feature.attributes.value
                                 };
                             });
@@ -175,10 +175,10 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
         }
         function createDataObjects(data) {
             var formattedChartData = [];
-            constants_1.durations.forEach(function (duration, t) {
-                constants_1.seasons.forEach(function (season, s) {
+            constants_1.months.forEach(function (month, s) {
+                constants_1.years.forEach(function (year, t) {
                     var matches = data.filter(function (datum) {
-                        return datum.season === season && datum.duration === duration;
+                        return datum.year === year && datum.month === month;
                     });
                     formattedChartData.push({
                         col: t,
@@ -196,25 +196,25 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                 highlight.remove();
                 highlight = null;
             }
-            seasonsNodes.forEach(function (node) {
-                node.classList.add("visible-season");
+            yearsNodes.forEach(function (node) {
+                node.classList.add("visible-year");
             });
             heatmapChart_1.updateGrid(layerStats, layerView, true);
         }
-        var layer, countiesLayer, map, view, seasonsElement, chartExpand, seasonsExpand, layerView, countiesLayerView, layerStats, seasonsNodes, highlight, previousId, resetBtn;
+        var layer, countiesLayer, map, view, yearsElement, chartExpand, yearsExpand, layerView, countiesLayerView, layerStats, yearsNodes, highlight, previousId, resetBtn;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     layer = new FeatureLayer({
                         portalItem: {
-                            id: "f9e348953b3848ec8b69964d5bceae02"
+                            id: "3a8aae65f6d64c9dacce3049ebe32f0c"
                         },
-                        outFields: ["DurationClass", "SEASON"]
+                        outFields: ["MonthName", "YEAR"]
                     });
                     countiesLayer = new FeatureLayer({
                         title: "counties",
                         portalItem: {
-                            id: "7566e0221e5646f99ea249a197116605"
+                            id: "3a8aae65f6d64c9dacce3049ebe32f0c"
                         },
                         popupTemplate: null,
                         opacity: 0,
@@ -232,7 +232,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                     view = new MapView({
                         map: map,
                         container: "viewDiv",
-                        center: [-97.20977281984334, 40.29693762632632],
+                        center: [-85, 50],
                         zoom: 4,
                         highlightOptions: {
                             color: "#262626",
@@ -243,21 +243,21 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                     return [4 /*yield*/, view.when()];
                 case 1:
                     _a.sent();
-                    seasonsElement = document.getElementById("seasons-filter");
-                    seasonsElement.style.visibility = "visible";
+                    yearsElement = document.getElementById("years-filter");
+                    yearsElement.style.visibility = "visible";
                     chartExpand = new Expand({
                         view: view,
                         content: document.getElementById("chartDiv"),
                         expandIconClass: "esri-icon-chart",
                         group: "top-left"
                     });
-                    seasonsExpand = new Expand({
+                    yearsExpand = new Expand({
                         view: view,
-                        content: seasonsElement,
+                        content: yearsElement,
                         expandIconClass: "esri-icon-filter",
                         group: "top-left"
                     });
-                    view.ui.add(seasonsExpand, "top-left");
+                    view.ui.add(yearsExpand, "top-left");
                     view.ui.add(chartExpand, "top-left");
                     view.ui.add("titleDiv", "top-right");
                     return [4 /*yield*/, view.whenLayerView(layer)];
@@ -270,9 +270,9 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                 case 4:
                     layerStats = _a.sent();
                     heatmapChart_1.updateGrid(layerStats, layerView);
-                    seasonsElement.addEventListener("click", filterBySeason);
-                    seasonsNodes = document.querySelectorAll(".season-item");
-                    seasonsExpand.watch("expanded", resetOnCollapse);
+                    yearsElement.addEventListener("click", filterByYear);
+                    yearsNodes = document.querySelectorAll(".year-item");
+                    yearsExpand.watch("expanded", resetOnCollapse);
                     chartExpand.watch("expanded", resetOnCollapse);
                     highlight = null;
                     view.on("drag", ["Control"], eventListener);
