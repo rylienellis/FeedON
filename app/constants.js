@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.seasons = ["Winter", "Spring", "Summer", "Fall"];
-    exports.durations = ["2.5", "5", "7.5", "10"];
+    exports.years = ["2016", "2017", "2018", "2019"];
+    exports.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 });
 //# sourceMappingURL=constants.js.map
