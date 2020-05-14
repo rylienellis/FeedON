@@ -1,2 +1,2 @@
-export const seasons = [ "Winter", "Spring", "Summer", "Fall" ];
-export const durations = [ "2.5", "5", "7.5", "10" ];
+export const years = [ "2016", "2017", "2018", "2019" ];
+export const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
