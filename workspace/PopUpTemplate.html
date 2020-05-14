@@ -7,7 +7,7 @@
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
 
-    <title>Reference Arcade expressions in PopupTemplate - 4.15</title>
+    <title>Popup Template</title>
 
     <link
       rel="stylesheet"
@@ -178,27 +178,28 @@
 
         var layer = new FeatureLayer({
           url:
-            "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/US_counties_employment_2016/FeatureServer/0",
+            "https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllYears/FeatureServer/0",
           outFields: [
-            "CIVLBFR_CY",
-            "NOT_LABORFORCE_16",
-            "COUNTY",
-            "STATE",
-            "POP_16UP",
-            "UNEMPRT_CY",
-            "UNEMP_CY",
-            "EMP_CY"
+            "Pop2016",
+            "ENGLISH_NA",
+            "visit_month",
+            "UniqueMonth_cnt",
+            "Cnt_standardized",
+            "Cnt_perc",
+            "Total_visits",
+            "DupMonth_adults",
+            "DupMonth_children"
           ],
           renderer: renderer,
-          title: "Labor force statistics",
+          title: "Food Bank Usage",
           popupTemplate: {
             // autocasts as new PopupTemplate()
-            title: "{COUNTY}, {STATE}",
+            title: "{ENGLISH_NA} - {visit_month}",
             content: [
               {
                 type: "text",
                 text:
-                  "In this county, {UNEMPRT_CY}% of the labor force is unemployed. " +
+                  "In this electoral riding, {Cnt_perc}% of the population accessed a food bank. " +
                   " {expression/strength-arcade}% of the {POP_16UP} people ages 16+" +
                   " living here {expression/predominance-arcade}."
               },
@@ -206,24 +207,32 @@
                 type: "fields",
                 fieldInfos: [
                   {
-                    fieldName: "CIVLBFR_CY",
-                    label: "Population in labor force (16+)",
+                    fieldName: "Pop2016",
+                    label: "Total Population (2016)",
                     format: {
                       digitSeparator: true,
                       places: 0
                     }
                   },
                   {
-                    fieldName: "EMP_CY",
-                    label: "Employed population",
+                    fieldName: "Total_visits",
+                    label: "Total visits to a food bank",
                     format: {
                       digitSeparator: true,
                       places: 0
                     }
                   },
                   {
-                    fieldName: "UNEMP_CY",
-                    label: "Unemployed population",
+                    fieldName: "DupMonth_adults",
+                    label: "Adults",
+                    format: {
+                      digitSeparator: true,
+                      places: 0
+                    }
+                  },
+                  {
+                    fieldName: "DupMonth_children",
+                    label: "Children",
                     format: {
                       digitSeparator: true,
                       places: 0
