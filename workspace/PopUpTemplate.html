@@ -34,7 +34,7 @@
 <- Arcade expression that determines the predominant category
 <- in each feature.
 <-
-<- In this case we want to know whether more people in living in
+<- In this case we want to know whether more people living in
 <- a given county are participating in the labor force.
 -->
 
@@ -43,8 +43,7 @@
       // The expression will return the alias of the predominant field
 
       var fields = [
-        { value: $feature.NOT_LABORFORCE_16, alias: "DON'T participate in the labor force" },
-        { value: $feature.CIVLBFR_CY, alias: "participate in the labor force" }
+        { value: $feature.Cnt_standardized, alias: "Food Bank Usage" }
       ];
 
       // Returns the predominant category as the alias
