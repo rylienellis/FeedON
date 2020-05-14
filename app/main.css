@@ -1,4 +1,3 @@
-
 html,
 body, #viewDiv {
   padding: 0;
@@ -19,14 +18,14 @@ body, #viewDiv {
   height: 100%;
 }
 
-#seasons-filter {
+#years-filter {
   height: 160px;
   width: 100%;
   background-color: white;
   visibility: hidden;
 }
 
-.season-item {
+.year-item {
   background-color: rgba(50,50,50,0.5);
   color: #fff;
   margin: 1px;
@@ -38,7 +37,7 @@ body, #viewDiv {
   height: 40px;
 }
 
-.visible-season {
+.visible-year {
   color: #fff;
   background-color: rgba(50,50,50,0.9);
 }
@@ -48,9 +47,9 @@ body, #viewDiv {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: 60px 75px 75px 75px 75px;
-  grid-template-rows: 75px 75px 75px 75px 40px;
-  grid-template-areas: "row-label1 canvas canvas canvas canvas" "row-label2 canvas canvas canvas canvas" "row3 canvas canvas canvas canvas" "row4 canvas canvas canvas canvas" ". col1 col2 col3 col4";
+  grid-template-columns: 60px 70px 70px 70px 70px;
+  grid-template-rows: 40px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  grid-template-areas: ". col1 col2 col3 col4" "row-label1 canvas canvas canvas canvas" "row-label2 canvas canvas canvas canvas " "row3 canvas canvas canvas canvas" "row4 canvas canvas canvas canvas" "row5 canvas canvas canvas canvas" "row6 canvas canvas canvas canvas" "row7 canvas canvas canvas canvas" "row8 canvas canvas canvas canvas" "row9 canvas canvas canvas canvas" "row10 canvas canvas canvas canvas" "row11 canvas canvas canvas canvas" "row12 canvas canvas canvas canvas";
 
   justify-items: stretch;
   align-items: stretch;
@@ -77,6 +76,14 @@ body, #viewDiv {
 .row-label2 { grid-area: row-label2; }
 .row3 { grid-area: row3; }
 .row4 { grid-area: row4; }
+.row5 { grid-area: row5; }
+.row6 { grid-area: row6; }
+.row7 { grid-area: row7; }
+.row8 { grid-area: row8; }
+.row9 { grid-area: row9; }
+.row10 { grid-area: row10; }
+.row11 { grid-area: row11; }
+.row12 { grid-area: row12; }
 
 #titleDiv {
  padding: 10px;
