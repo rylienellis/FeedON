@@ -8,7 +8,7 @@ define(["require", "exports", "esri/views/layers/support/FeatureFilter", "esri/C
     var start = new Color("#eaf5ff");
     var end = new Color("#003E72");
     var numCols = 4;
-    var numRows = 4;
+    var numRows = 12;
     function normalize(value, minValue, maxValue) {
         return (value - minValue) / (maxValue - minValue);
     }
@@ -98,12 +98,12 @@ define(["require", "exports", "esri/views/layers/support/FeatureFilter", "esri/C
     //   highlighted = null;
     // }
     function onCellSelect(cell) {
-        var season = constants_1.seasons[cell.row];
-        var duration = constants_1.durations[cell.col];
+        var year = constants_1.years[cell.col];
+        var month = constants_1.months[cell.row];
         if (mousemoveEnabled) {
             highlighted = { col: cell.col, row: cell.row };
             layerView.filter = new FeatureFilter({
-                where: "Season = '" + season + "' AND DurationClass = '" + duration + "'"
+                where: "Year = '" + year + "' AND MonthName = '" + month + "'"
             });
         }
         updateGrid();
