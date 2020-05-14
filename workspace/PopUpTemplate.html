@@ -78,7 +78,7 @@
 
     <script type="text/plain" id="strength-arcade">
       // Returns the share of the dominant demographic as a percentage
-      var fieldValues = [ $feature.NOT_LABORFORCE_16, $feature.CIVLBFR_CY ];
+      var fieldValues = [ $feature.UniqueMonth_cnt ];
       var winner = Max(fieldValues);
       var total = Sum(fieldValues);
       return (winner/total) * 100;
