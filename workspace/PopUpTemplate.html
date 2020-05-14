@@ -91,95 +91,95 @@
         "esri/layers/FeatureLayer",
         "esri/widgets/Legend"
       ], function(Map, MapView, FeatureLayer, Legend) {
-         var legend = new Legend({
-           layerInfos: [
-             {
-               layer: layer,
-               title: "Food Bank Usage"
-             }
-           ]
-         })
-         }
-      );
+//          var legend = new Legend({
+//            layerInfos: [
+//              {
+//                layer: layer,
+//                title: "Food Bank Usage"
+//              }
+//            ]
+//          })
+//          }
+//       );
            
-//         // The expressionInfos reference Arcade expressions and
-//         // assign each of them a title and name. The name is used
-//         // to reference it in the PopupTemplate and the title is
-//         // used to describe the value in the popup and legend.
+        // The expressionInfos reference Arcade expressions and
+        // assign each of them a title and name. The name is used
+        // to reference it in the PopupTemplate and the title is
+        // used to describe the value in the popup and legend.
 
-//         var arcadeExpressionInfos = [
-//           // Get Arcade expression returning the predominant demographic in the county:
-//           // Whether the majority of people are in the labor force or not
-//           {
-//             name: "predominance-arcade",
-//             title: "Most people (16+)...",
-//             expression: document.getElementById("predominance-arcade").text
-//           },
-//           // Get Arcade expression returning the share of the total comprised
-//           // by the predominant category
-//           {
-//             name: "strength-arcade",
-//             title: "% of population belonging to majority category",
-//             expression: document.getElementById("strength-arcade").text
-//           },
-//           // Arcade expression that returns the total number of people not working
-//           {
-//             name: "not-working-arcade",
-//             title: "Total population 16+ not employed or in labor force",
-//             expression: "$feature.POP_16UP - $feature.EMP_CY"
-//           },
-//           // Arcade expression that returns the % of people not working
-//           {
-//             name: "%-not-working-arcade",
-//             title: "% of population 16+ not employed or in labor force",
-//             expression:
-//               "Round((($feature.POP_16UP - $feature.EMP_CY)/$feature.POP_16UP)*100) + '%'"
-//           }
-//         ];
+        var arcadeExpressionInfos = [
+          // Get Arcade expression returning the predominant demographic in the county:
+          // Whether the majority of people are in the labor force or not
+          {
+            name: "predominance-arcade",
+            title: "Most people (16+)...",
+            expression: document.getElementById("predominance-arcade").text
+          },
+          // Get Arcade expression returning the share of the total comprised
+          // by the predominant category
+          {
+            name: "strength-arcade",
+            title: "% of population belonging to majority category",
+            expression: document.getElementById("strength-arcade").text
+          },
+          // Arcade expression that returns the total number of people not working
+          {
+            name: "not-working-arcade",
+            title: "Total population 16+ not employed or in labor force",
+            expression: "$feature.POP_16UP - $feature.EMP_CY"
+          },
+          // Arcade expression that returns the % of people not working
+          {
+            name: "%-not-working-arcade",
+            title: "% of population 16+ not employed or in labor force",
+            expression:
+              "Round((($feature.POP_16UP - $feature.EMP_CY)/$feature.POP_16UP)*100) + '%'"
+          }
+        ];
 
-//         // Add the expressions to a unique value renderer and create a
-//         // symbol for each possible value.
+        // Add the expressions to a unique value renderer and create a
+        // symbol for each possible value.
 
-//         var renderer = {
-//           type: "unique-value", // autocasts as new UniqueValueRenderer()
-//           valueExpression: arcadeExpressionInfos[0].expression,
-//           valueExpressionTitle: arcadeExpressionInfos[0].title,
-//           defaultSymbol: createSymbol("lightgray"),
-//           defaultLabel: "Other/or tie",
-//           uniqueValueInfos: [
-//             {
-//               value: "participate in the labor force",
-//               symbol: createSymbol("#6b4da2")
-//             },
-//             {
-//               value: "DON'T participate in the labor force",
-//               symbol: createSymbol("#e86b0c")
-//             }
-//           ],
-//           // Add an Arcade expression to an opacity visual variable. Counties where
-//           // the predominant category is nearly equal with the others (54%) are very
-//           // transparent. Counties where the predominant category makes up at least 66%
-//           // of all people 16 and older are fully opaque.
-//           visualVariables: [
-//             {
-//               type: "opacity",
-//               valueExpression: arcadeExpressionInfos[1].expression,
-//               valueExpressionTitle: arcadeExpressionInfos[1].title,
-//               stops: [
-//                 { value: 54, opacity: 0.05, label: "< 54%" },
-//                 { value: 66, opacity: 1.0, label: "> 66%" }
-//               ]
-//             },
-//             {
-//               type: "size",
-//               field: "UNEMPRT_CY",
-//               minDataValue: 5,
-//               maxDataValue: 28.8,
-//               minSize: 6,
-//               maxSize: 50
-//             }
-//           ]
-//         };
+        var renderer = {
+          type: "unique-value", // autocasts as new UniqueValueRenderer()
+          valueExpression: arcadeExpressionInfos[0].expression,
+          valueExpressionTitle: arcadeExpressionInfos[0].title,
+          defaultSymbol: createSymbol("lightgray"),
+          defaultLabel: "Other/or tie",
+          uniqueValueInfos: [
+            {
+              value: "participate in the labor force",
+              symbol: createSymbol("#6b4da2")
+            },
+            {
+              value: "DON'T participate in the labor force",
+              symbol: createSymbol("#e86b0c")
+            }
+          ],
+          // Add an Arcade expression to an opacity visual variable. Counties where
+          // the predominant category is nearly equal with the others (54%) are very
+          // transparent. Counties where the predominant category makes up at least 66%
+          // of all people 16 and older are fully opaque.
+          visualVariables: [
+            {
+              type: "opacity",
+              valueExpression: arcadeExpressionInfos[1].expression,
+              valueExpressionTitle: arcadeExpressionInfos[1].title,
+              stops: [
+                { value: 54, opacity: 0.05, label: "< 54%" },
+                { value: 66, opacity: 1.0, label: "> 66%" }
+              ]
+            },
+            {
+              type: "size",
+              field: "UNEMPRT_CY",
+              minDataValue: 5,
+              maxDataValue: 28.8,
+              minSize: 6,
+              maxSize: 50
+            }
+          ]
+        };
 
         // Create FeatureLayer instance with popupTemplate
         // Note the Arcade expression placeholders used in the text and fieldInfos
