@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Hungry and Hurting</title>
+  <title>Canada for Kids</title>
   <style>
     html, body, #viewDiv {
       padding: 0;
@@ -44,17 +44,7 @@
       // Web Layer from arcgis online service url 
       var foodbankuse = new FeatureLayer({
         url: "https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllYears/FeatureServer/0",
-        outFields: [
-          "Pop2016",
-          "ENGLISH_NA",
-          "visit_month",
-          "UniqueMonth_cnt",
-          "Cnt_standardized",
-          "Cnt_perc",
-          "Total_visits",
-          "DupMonth_adults",
-          "DupMonth_children"
-        ], 
+        outFields: ["*"], 
         title: "Food Banks Usage",
         popupTemplate: {
           title: "{ENGLISH_NA} - {visit_month}",
@@ -97,6 +87,20 @@
                   format: {
                     digitSeparator: true, 
                     places: 0
+                  }
+                }
+              ]
+            },
+            {
+              type: "media", //MediaContentElement for chart
+              mediaInfos:[
+                {
+                  title: "<b>Housing</b>",
+                  type: "pie-chart",
+                  caption: "",
+                  value: {
+                    fields: ["UniqueHousing_own_home", "UniqueHousing_private_rental", "UniqueHousing_band_owned", "UniqueHousing_emergency_shelter", "UniqueHousing_youth_home_shelter", "UniqueHousing_on_the_street", "UniqueHousing_rooming_house", "UniqueHousing_social_housing", "UniqueHousing_with_family_friends", "UniqueHousing_undisclosed", "UniqueHousing_unknown", "UniqueHousing_other"],
+                    normalizeField: null
                   }
                 }
               ]
