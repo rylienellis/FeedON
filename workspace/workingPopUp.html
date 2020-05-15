@@ -1,0 +1,108 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Canada for Kids</title>
+  <style>
+    html, body, #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  
+  <link rel="stylesheet" href="https://js.arcgis.com/4.13/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.13/"></script>
+  
+  <script>  
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer"
+    ], function(Map, MapView, FeatureLayer) {
+
+      var map = new Map({
+        basemap: "gray"
+      });
+      
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-84.769007,47.988083],
+        zoom: 5.5
+      });
+      
+      // Web Layer from arcgis online service url 
+      var foodbankuse = new FeatureLayer({
+        url: "https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllYears/FeatureServer/0",
+        outFields: [
+          "Pop2016",
+          "ENGLISH_NA",
+          "visit_month",
+          "UniqueMonth_cnt",
+          "Cnt_standardized",
+          "Cnt_perc",
+          "Total_visits",
+          "DupMonth_adults",
+          "DupMonth_children"
+        ], 
+        title: "Food Banks Usage",
+        popupTemplate: {
+          title: "{ENGLISH_NA} - {visit_month}",
+          content:[
+            {
+              type: "text",
+              text:
+                "In this electoral riding, {Cnt_perc}% of the population accessed a food bank... Make this 1 out of 100 people accessed.."
+            },
+            {
+              type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "Pop2016",
+                  label: "Total Population (2016)",
+                  format: {
+                    digitSeparator: true,
+                    places: 0
+                  }
+                },
+                {
+                  fieldName: "Total_visits",
+                  label: "Total visits to a food bank",
+                  format: {
+                    digitSeparator: true,
+                    places: 0
+                  }
+                },
+                {
+                  fieldName: "DupMonth_adults",
+                  label: "Adults",
+                  format: {
+                    digitSeparator: true,
+                    places: 0
+                  }
+                },
+                {
+                  fieldName: "DupMonth_children",
+                  label: "Children",
+                  format: {
+                    digitSeparator: true, 
+                    places: 0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      });
+
+      map.add(foodbankuse, 0)
+    });
+    
+  </script>
+</head>
+<body>
+  <div id="viewDiv"></div>
+</body>
+</html>
