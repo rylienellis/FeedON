@@ -30,7 +30,15 @@
         container: "viewDiv",
         map: map,
         center: [-84.769007,47.988083],
-        zoom: 5.5
+        zoom: 5.5,
+        // This popup section can be taken out if we want the popups to hover over the selected area
+        popup: {
+          dockEnabled: true,
+          dockOptions: {
+            buttonEnabled: false,
+            breakpoint: false
+          }
+        }
       });
       
       // Web Layer from arcgis online service url 
