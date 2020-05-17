@@ -107,20 +107,7 @@
             }
           ]
         }
-      });
-      // For calling the alias names from the feature layer for the fields in the pie chart --- unsure if this works yet
-      foodbankuse.load().then(function(){
-        var query = foodbankuse.createQuery();
-        query.returnGeometry = true;
-        query.where = "1=1";
-        
-        foodbankuse.queryFeatures(query).then(function(results){
-          foodbankuse.popupTemplate.content = results.fields[1].alias;
-        });
-      });
-      
-      
-
+      });  
       map.add(foodbankuse)
     });
     
