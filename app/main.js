@@ -113,7 +113,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             query.outStatistics = [
                                 new StatisticDefinition({
                                     onStatisticField: "Total_visits",
-                                    outStatisticFieldName: "Total_visits_month",
+                                    outStatisticFieldName: "value",
                                     statisticType: "sum"
                                 })
                             ];
@@ -150,7 +150,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             query.outStatistics = [
                                 new StatisticDefinition({
                                     onStatisticField: "Total_visits",
-                                    outStatisticFieldName: "total_visits_month",
+                                    outStatisticFieldName: "value",
                                     statisticType: "sum"
                                 })
                             ];
