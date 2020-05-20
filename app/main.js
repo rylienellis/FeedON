@@ -235,7 +235,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                         center: [-85, 50],
                         zoom: 4,
                         highlightOptions: {
-                            color: "#262626",
+                            color: "#33cccc",
                             haloOpacity: 1,
                             fillOpacity: 0
                         }
