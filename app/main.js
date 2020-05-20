@@ -112,9 +112,9 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             query = layerView.layer.createQuery();
                             query.outStatistics = [
                                 new StatisticDefinition({
-                                    onStatisticField: "1",
-                                    outStatisticFieldName: "value",
-                                    statisticType: "count"
+                                    onStatisticField: "Total_visits",
+                                    outStatisticFieldName: "Total_visits_month",
+                                    statisticType: "sum"
                                 })
                             ];
                             query.groupByFieldsForStatistics = ["YEAR + '-' + MonthName"];
@@ -149,9 +149,9 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             query = layer.createQuery();
                             query.outStatistics = [
                                 new StatisticDefinition({
-                                    onStatisticField: "1",
-                                    outStatisticFieldName: "value",
-                                    statisticType: "count"
+                                    onStatisticField: "Total_visits",
+                                    outStatisticFieldName: "total_visits_month",
+                                    statisticType: "sum"
                                 })
                             ];
                             query.groupByFieldsForStatistics = ["YEAR + '-' + MonthName"];
