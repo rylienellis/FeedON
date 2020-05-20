@@ -163,9 +163,9 @@ import { months, years } from "./constants";
 
     query.outStatistics = [
       new StatisticDefinition({
-        onStatisticField: "1",
-        outStatisticFieldName: "value",
-        statisticType: "count"
+        onStatisticField: "Total_visits",
+        outStatisticFieldName: "total_visits_month",
+        statisticType: "sum"
       })
     ];
     query.groupByFieldsForStatistics = [ "YEAR + '-' + MonthName" ];
@@ -193,9 +193,9 @@ import { months, years } from "./constants";
     const query = layer.createQuery();
     query.outStatistics = [
       new StatisticDefinition({
-        onStatisticField: "1",
-        outStatisticFieldName: "value",
-        statisticType: "count"
+        onStatisticField: "Total_visits",
+        outStatisticFieldName: "Total_visits_month",
+        statisticType: "sum"
       })
     ];
     query.groupByFieldsForStatistics = [ "YEAR + '-' + MonthName" ];
