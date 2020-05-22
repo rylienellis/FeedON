@@ -63,11 +63,11 @@
         "esri/Map",
         "esri/layers/FeatureLayer",
         "esri/widgets/Expand"
-      ], function(MapView, Map, FeatureLayer, Expand) {
+      ], function(MapView, Map, AnnualLayer, Expand) {
         let annualLayerView;
 
         // Annual foodbank data layer
-        const layer = new FeatureLayer({
+        const layer = new AnnualLayer({
           portalItem: {
             // ID for Annual All Years feature layer from arcgis online
             id: "c1c22edd96a4477ba505e222e176ba80"
