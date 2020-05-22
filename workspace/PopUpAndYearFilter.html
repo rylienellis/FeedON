@@ -67,7 +67,7 @@
         let annualLayerView;
 
         // Annual foodbank data layer
-        const layer = new AnnualLayer({
+        const annualFoodbankUse = new AnnualLayer({
           portalItem: {
             // ID for Annual All Years feature layer from arcgis online
             id: "c1c22edd96a4477ba505e222e176ba80"
@@ -77,7 +77,7 @@
 
         const map = new Map({
           basemap: "gray-vector",
-          layers: [layer]
+          layers: [annualFoodbankUse]
         });
 
         const view = new MapView({
@@ -103,9 +103,9 @@
           };
         }
 
-        view.whenLayerView(layer).then(function(layerView) {
-          // flash flood warnings layer loaded
-          // get a reference to the flood warnings layerview
+        view.whenLayerView(annualFoodbankUse).then(function(layerView) {
+          // annual food bank layer loaded
+          // get a reference to the layerview
           annualLayerView = layerView;
 
           // set up UI items
