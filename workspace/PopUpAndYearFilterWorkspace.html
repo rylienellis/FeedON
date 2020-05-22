@@ -67,7 +67,95 @@
       ], function(MapView, Map, AnnualLayer, MonthlyLayer, Expand) {
         let annualLayerView;
 
-        var template = {
+        // Annual foodbank data layer
+        const annualFoodbankUse = new AnnualLayer({
+          portalItem: {
+            // ID for Annual All Years feature layer from arcgis online
+            id: "c1c22edd96a4477ba505e222e176ba80"
+          },
+          outFields: ["YearString"],
+          popupTemplate: {
+            title: "{ENGLISH_NA} | {YearString}",
+            content:[
+              {
+                type: "text",
+                text:
+                  "In this electoral riding, {UniqueIndividuals_perc}% of the population accessed a food bank... Make this 1 out of 100 people accessed.."
+              },
+              {
+                type: "fields",
+                fieldInfos: [
+                  {
+                    fieldName: "Pop2016",
+                    label: "Total Population (2016)",
+                    format: {
+                      digitSeparator: true,
+                      places: 0
+                    }
+                  },
+                  {
+                    fieldName: "UniqueIndividuals_cnt",
+                    label: "Total unique visits",
+                    format: {
+                      digitSeparator: true,
+                      places: 0
+                    }
+                  },
+                  {
+                    fieldName: "DupMonth_adults",
+                    label: "Adults",
+                    format: {
+                      digitSeparator: true,
+                      places: 0
+                    }
+                  },
+                  {
+                    fieldName: "DupMonth_children",
+                    label: "Children",
+                    format: {
+                      digitSeparator: true, 
+                      places: 0
+                    }
+                  }
+                ]
+              },
+              {
+                type: "media", //MediaContentElement for chart
+                mediaInfos:[
+                  {
+                    title: "<b>Housing</b>",
+                    type: "pie-chart",
+                    caption: "",
+                    value: {
+                      fields: ["housing_own_home", "housing_private_rental", "housing_band_owned", "housing_emergency_shelter", "housing_youth_home_shelter", "housing_on_the_street", "housing_rooming_house", "housing_social_housing", "housing_with_family_friends", "housing_undisclosed", "housing_unknown", "housing_other"],
+                      normalizeField: null
+                    }
+                  }
+                ]
+              },
+              {
+                type: "media",
+                mediaInfos: [
+                  {
+                    title: "<b> Primary Source of Income</b>",
+                    type: "pie-chart",
+                    caption: "",
+                    value: {
+                      fields: [ "income_canada_child_benefit", "income_disability_benefits", "income_employment_income", "income_employment_insurance", "income_no_income", "income_other", "income_other_specify", "income_pension", "income_provincial_disability", "income_social_assistance", "income_student_loan", "income_undisclosed", "income_unknown" ],
+                      normalizeField: null
+                    }
+                  }
+                ]
+              }     
+            ]
+          }
+        });
+        
+        var monthlyFoodBankUse = new MonthlyLayer({
+          url: "https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllMonths_Working/FeatureServer/0",
+          outFields: ["*"], 
+          title: "Monthly Food Bank Usage",
+          popupTemplate: {
             title: "{ENGLISH_NA} | {MonthName} {Year}",
             content:[
               {
@@ -141,23 +229,7 @@
                 ]
               }     
             ]
-        };
-
-        // Annual foodbank data layer
-        const annualFoodbankUse = new AnnualLayer({
-          portalItem: {
-            // ID for Annual All Years feature layer from arcgis online
-            id: "c1c22edd96a4477ba505e222e176ba80"
-          },
-          outFields: ["YearString"],
-          popupTemplate: template
-        });
-        
-        var monthlyFoodBankUse = new MonthlyLayer({
-          url: "https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllMonths_Working/FeatureServer/0",
-          outFields: ["*"], 
-          title: "Monthly Food Bank Usage",
-          popupTemplate: template
+          }
         });
         
         const map = new Map({
@@ -169,14 +241,7 @@
           map: map,
           container: "viewDiv",
           center: [-84.769007,47.988083],
-          zoom: 4,
-          popup: {
-            dockEnabled: true,
-            dockOptions: {
-              buttonEnabled: false,
-              breakpoint: false
-            }
-          }
+          zoom: 5.5
         });
 
         const yearNodes = document.querySelectorAll(`.year-item`);
@@ -217,7 +282,7 @@
           view.ui.add(yearExpand, "top-left");
           view.ui.add("titleDiv", "top-right");
         });
-        // map.add(monthlyFoodBankUse)
+       // map.add(monthlyFoodBankUse)
       });
     </script>
   </head>
