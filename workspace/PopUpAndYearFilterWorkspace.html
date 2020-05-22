@@ -73,14 +73,18 @@
             // ID for Annual All Years feature layer from arcgis online
             id: "c1c22edd96a4477ba505e222e176ba80"
           },
-          outFields: ["YearString"]
+          outFields: ["YearString"],
+          popupTemplate: template
         });
         
         var monthlyFoodBankUse = new MonthlyLayer({
           url: "https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllMonths_Working/FeatureServer/0",
           outFields: ["*"], 
-          title: "Food Banks Usage",
-          popupTemplate: {
+          title: "Monthly Food Bank Usage",
+          popupTemplate: template
+        });
+          
+        var template = {
             title: "{ENGLISH_NA} | {MonthName} {Year}",
             content:[
               {
@@ -154,8 +158,7 @@
                 ]
               }     
             ]
-          }
-        });
+          };
         
         const map = new Map({
           basemap: "gray-vector",
