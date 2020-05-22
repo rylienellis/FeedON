@@ -169,7 +169,14 @@
           map: map,
           container: "viewDiv",
           center: [-84.769007,47.988083],
-          zoom: 5.5
+          zoom: 5,
+          popup: {
+            dockEnabled: true,
+            dockOptions: {
+              buttonEnabled: false,
+              breakpoint: false
+            }
+          }
         });
 
         const yearNodes = document.querySelectorAll(`.year-item`);
