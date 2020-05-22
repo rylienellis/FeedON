@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Hungry and Hurting</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.15/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #year-filter {
+        height: 160px;
+        width: 100%;
+        visibility: hidden;
+      }
+
+      .year-item {
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+        vertical-align: baseline;
+        cursor: pointer;
+        height: 40px;
+      }
+
+      .year-item:focus {
+        background-color: dimgrey;
+      }
+
+      .year-item:hover {
+        background-color: dimgrey;
+      }
+
+      #titleDiv {
+        padding: 10px;
+      }
+
+      #titleText {
+        font-size: 20pt;
+        font-weight: 60;
+        padding-bottom: 10px;
+      }
+    </style>
+    <script>
+      require([
+        "esri/views/MapView",
+        "esri/Map",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Expand"
+      ], function(MapView, Map, FeatureLayer, Expand) {
+        let annualLayerView;
+
+        // Annual foodbank data layer
+        const layer = new FeatureLayer({
+          portalItem: {
+            // ID for Annual All Years feature layer from arcgis online
+            id: "c1c22edd96a4477ba505e222e176ba80"
+          },
+          outFields: ["YearString"]
+        });
+
+        const map = new Map({
+          basemap: "gray-vector",
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          map: map,
+          container: "viewDiv",
+          center: [-84.769007,47.988083],
+          zoom: 5.5
+        });
+
+        const yearNodes = document.querySelectorAll(`.year-item`);
+        const yearElement = document.getElementById("year-filter");
+
+        // click event handler for seasons choices
+        yearElement.addEventListener("click", filterByYear);
+
+        // User clicked on 2016, 2017, 2018 or 2019
+        // set an attribute filter on the layer view
+        // to display the food bank usage that year
+        function filterByYear(event) {
+          const selectedYear = event.target.getAttribute("data-YearString");
+          annualLayerView.filter = {
+            where: "YearString = '" + selectedYear + "'"
+          };
+        }
+
+        view.whenLayerView(layer).then(function(layerView) {
+          // flash flood warnings layer loaded
+          // get a reference to the flood warnings layerview
+          annualLayerView = layerView;
+
+          // set up UI items
+          yearElement.style.visibility = "visible";
+          const yearExpand = new Expand({
+            view: view,
+            content: yearElement,
+            expandIconClass: "esri-icon-filter",
+            group: "top-left"
+          });
+          //clear the filters when user closes the expand widget
+          yearExpand.watch("expanded", function() {
+            if (!yearExpand.expanded) {
+              annualLayerView.filter = null;
+            }
+          });
+          view.ui.add(yearExpand, "top-left");
+          view.ui.add("titleDiv", "top-right");
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="year-filter" class="esri-widget">
+      <div class="year-item visible-year" data-YearString="2016">2016</div>
+      <div class="year-item visible-year" data-YearString="2017">2017</div>
+      <div class="year-item visible-year" data-YearString="2018">2018</div>
+      <div class="year-item visible-year" data-YearString="2019">2019</div>
+    </div>
+    <div id="viewDiv"></div>
+    <div id="titleDiv" class="esri-widget">
+      <div id="titleText">Food Bank Usage</div>
+      <div>Ontario Electoral Ridings (2016 - 2019)</div>
+    </div>
+  </body>
+</html>
