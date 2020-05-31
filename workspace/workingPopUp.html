@@ -32,13 +32,13 @@
         center: [-84.769007,47.988083],
         zoom: 5.5,
         // This popup section can be taken out if we want the popups to hover over the selected area
-        popup: {
-          dockEnabled: true,
-          dockOptions: {
-            buttonEnabled: false,
-            breakpoint: false
-          }
-        }
+//         popup: {
+//           dockEnabled: true,
+//           dockOptions: {
+//             buttonEnabled: false,
+//             breakpoint: false
+//           }
+//         }
       });
       
       // Web Layer from arcgis online service url https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllYears/FeatureServer/0
@@ -54,7 +54,7 @@
             {
               type: "text",
               text:
-                "In this electoral riding, {DupMonth_adults + DupMonth_children} of the population accessed a food bank... Make this 1 out of 100 people accessed.."
+                "In this electoral riding, {Cnt_perc} out of 100 people accessed a food bank."
             },
             {
               type: "fields",
@@ -67,9 +67,20 @@
                     places: 0
                   }
                 },
+                            {
+              type: "fields",
+              fieldInfos: [
                 {
-                  fieldName: "Total_visits",
+                  fieldName: "Total_visits_dup",
                   label: "Total visits to a food bank",
+                  format: {
+                    digitSeparator: true,
+                    places: 0
+                  }
+                },
+                {
+                  fieldName: "UniqueMonth_cnt",
+                  label: "Total unique individual visits",
                   format: {
                     digitSeparator: true,
                     places: 0
