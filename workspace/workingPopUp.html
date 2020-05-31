@@ -43,7 +43,9 @@
       
       // Web Layer from arcgis online service url https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllYears/FeatureServer/0
       var foodbankuse = new FeatureLayer({
-        url: "https://services1.arcgis.com/pMeXRvgWClLJZr3s/arcgis/rest/services/ON_Districts_AllMonths_Working/FeatureServer/0",
+        portalItem: {
+          id: 'c0912eeb4037463589798a0b44aadb88'
+        },
         outFields: ["*"], 
         title: "Food Banks Usage",
         popupTemplate: {
