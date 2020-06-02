@@ -52,16 +52,20 @@
           title: "{ENGLISH_NA} | {MonthName} {Year}",
           expressionInfos: [
             {
-              name: "Private-Rental",
-              title: "Private Rental",
-              expression: "$feature.UniqueHousing_private_rental"
+              // Tried this for the pie chart but still references "expression/private-rental"
+             // name: "Private-Rental",
+             // title: "Private Rental",
+             // expression: "$feature.UniqueHousing_private_rental"
+              name: "1in1000",
+              title: "1in1000 Popup",
+              expression: "Round((($feature.Cnt_perc)*10),1)
             }
           ],
           content:[
             {
               type: "text",
               text:
-                "In this electoral riding, {Cnt_perc} out of 100 people accessed a food bank."
+                "In this electoral riding, {expression/1in1000} out of 100 people accessed a food bank."
             },
             {
               type: "fields",
