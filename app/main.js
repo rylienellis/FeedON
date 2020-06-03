@@ -38,25 +38,6 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
     var _this = this;
     Object.defineProperty(exports, "__esModule", { value: true });
     (function () { return __awaiter(_this, void 0, void 0, function () {
-        function filterByYear(event) {
-            var selectedYear = event.target.getAttribute("data-year");
-            yearsNodes.forEach(function (node) {
-                var year = node.innerText;
-                if (year !== selectedYear) {
-                    if (node.classList.contains("visible-year")) {
-                        node.classList.remove("visible-year");
-                    }
-                }
-                else {
-                    if (!node.classList.contains("visible-year")) {
-                        node.classList.add("visible-year");
-                    }
-                }
-            });
-            layerView.filter = new FeatureFilter({
-                where: "Year = '" + selectedYear + "'"
-            });
-        }
         function resetOnCollapse(expanded) {
             if (!expanded) {
                 resetVisuals();
@@ -72,7 +53,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             return [4 /*yield*/, view.hitTest(event)];
                         case 1:
                             hitResponse = _a.sent();
-                            hitResults = hitResponse.results.filter(function (hit) { return hit.graphic.layer === countiesLayer; });
+                            hitResults = hitResponse.results.filter(function (hit) { return hit.graphic.layer === districtsLayer; });
                             if (!(hitResults.length > 0)) return [3 /*break*/, 3];
                             graphic = hitResults[0].graphic;
                             if (!(previousId !== graphic.attributes.FID)) return [3 /*break*/, 3];
@@ -81,7 +62,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                 highlight.remove();
                                 highlight = null;
                             }
-                            highlight = countiesLayerView.highlight([previousId]);
+                            highlight = districtsLayerView.highlight([previousId]);
                             geometry = graphic && graphic.geometry;
                             queryOptions = {
                                 geometry: geometry,
@@ -112,7 +93,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             query = layerView.layer.createQuery();
                             query.outStatistics = [
                                 new StatisticDefinition({
-                                    onStatisticField: "Total_visits",
+                                    onStatisticField: "Total_visits_dup",
                                     outStatisticFieldName: "value",
                                     statisticType: "sum"
                                 })
@@ -149,7 +130,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             query = layer.createQuery();
                             query.outStatistics = [
                                 new StatisticDefinition({
-                                    onStatisticField: "Total_visits",
+                                    onStatisticField: "Total_visits_dup",
                                     outStatisticFieldName: "value",
                                     statisticType: "sum"
                                 })
@@ -196,25 +177,22 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                 highlight.remove();
                 highlight = null;
             }
-            yearsNodes.forEach(function (node) {
-                node.classList.add("visible-year");
-            });
             heatmapChart_1.updateGrid(layerStats, layerView, true);
         }
-        var layer, countiesLayer, map, view, yearsElement, chartExpand, yearsExpand, layerView, countiesLayerView, layerStats, yearsNodes, highlight, previousId, resetBtn;
+        var layer, districtsLayer, map, mapList, view, chartExpand, layerView, districtsLayerView, layerStats, highlight, previousId, resetBtn;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     layer = new FeatureLayer({
                         portalItem: {
-                            id: "3a8aae65f6d64c9dacce3049ebe32f0c"
+                            id: "c0912eeb4037463589798a0b44aadb88"
                         },
                         outFields: ["MonthName", "YEAR"]
                     });
-                    countiesLayer = new FeatureLayer({
-                        title: "counties",
+                    districtsLayer = new FeatureLayer({
+                        title: "districts",
                         portalItem: {
-                            id: "3a8aae65f6d64c9dacce3049ebe32f0c"
+                            id: "c0912eeb4037463589798a0b44aadb88"
                         },
                         popupTemplate: null,
                         opacity: 0,
@@ -225,17 +203,19 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             })
                         })
                     });
+                    
                     map = new EsriMap({
                         basemap: "gray-vector",
-                        layers: [layer, countiesLayer]
+                        layers: [layer, districtsLayer]
                     });
+
                     view = new MapView({
                         map: map,
                         container: "viewDiv",
-                        center: [-85, 50],
-                        zoom: 4,
+                        center: [-87, 50],
+                        zoom: 4.5,
                         highlightOptions: {
-                            color: "#33cccc",
+                            color: "#262626",
                             haloOpacity: 1,
                             fillOpacity: 0
                         }
@@ -243,36 +223,23 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                     return [4 /*yield*/, view.when()];
                 case 1:
                     _a.sent();
-                    yearsElement = document.getElementById("years-filter");
-                    yearsElement.style.visibility = "visible";
                     chartExpand = new Expand({
                         view: view,
                         content: document.getElementById("chartDiv"),
                         expandIconClass: "esri-icon-chart",
                         group: "top-left"
                     });
-                    yearsExpand = new Expand({
-                        view: view,
-                        content: yearsElement,
-                        expandIconClass: "esri-icon-filter",
-                        group: "top-left"
-                    });
-                    view.ui.add(yearsExpand, "top-left");
                     view.ui.add(chartExpand, "top-left");
-                    view.ui.add("titleDiv", "top-right");
                     return [4 /*yield*/, view.whenLayerView(layer)];
                 case 2:
                     layerView = _a.sent();
-                    return [4 /*yield*/, view.whenLayerView(countiesLayer)];
+                    return[4 /*yield*/, view.whenLayerView(districtsLayer)];
                 case 3:
-                    countiesLayerView = _a.sent();
+                    districtsLayerView = _a.sent();
                     return [4 /*yield*/, queryLayerStatistics(layer)];
                 case 4:
                     layerStats = _a.sent();
                     heatmapChart_1.updateGrid(layerStats, layerView);
-                    yearsElement.addEventListener("click", filterByYear);
-                    yearsNodes = document.querySelectorAll(".year-item");
-                    yearsExpand.watch("expanded", resetOnCollapse);
                     chartExpand.watch("expanded", resetOnCollapse);
                     highlight = null;
                     view.on("drag", ["Control"], eventListener);
