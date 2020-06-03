@@ -18,15 +18,15 @@ import { months, years } from "./constants";
 
   const layer = new FeatureLayer({
     portalItem: {
-      id: "3a8aae65f6d64c9dacce3049ebe32f0c"
+      id: "c0912eeb4037463589798a0b44aadb88"
     },
-    outFields: [ "MonthName", "YEAR" ]
+    outFields: [ "MonthName", "Year" ]
   });
 
-  const countiesLayer = new FeatureLayer({
-    title: "counties",
+  const districtsLayer = new FeatureLayer({
+    title: "districts",
     portalItem: {
-      id: "3a8aae65f6d64c9dacce3049ebe32f0c"
+      id: "c0912eeb4037463589798a0b44aadb88"
     },
     popupTemplate: null,
     opacity: 0,
@@ -40,14 +40,14 @@ import { months, years } from "./constants";
 
   const map = new EsriMap({
     basemap: "gray-vector",
-    layers: [ layer, countiesLayer ]
+    layers: [ layer, districtsLayer ]
   });
 
   const view = new MapView({
     map: map,
     container: "viewDiv",
     center: [ -85, 50 ],
-    zoom: 4,
+    zoom: 4.5,
     highlightOptions: {
       color: "#262626",
       haloOpacity: 1,
@@ -56,52 +56,19 @@ import { months, years } from "./constants";
   });
 
   await view.when();
-  const yearsElement = document.getElementById("years-filter");
-  yearsElement.style.visibility = "visible";
   const chartExpand = new Expand({
     view,
     content: document.getElementById("chartDiv"),
     expandIconClass: "esri-icon-chart",
     group: "top-left"
   });
-  const yearsExpand = new Expand({
-    view,
-    content: yearsElement,
-    expandIconClass: "esri-icon-filter",
-    group: "top-left"
-  });
-  view.ui.add(yearsExpand, "top-left");
   view.ui.add(chartExpand, "top-left");
-  view.ui.add("titleDiv", "top-right");
 
   const layerView = await view.whenLayerView(layer) as esri.FeatureLayerView;
-  const countiesLayerView = await view.whenLayerView(countiesLayer) as esri.FeatureLayerView;
+  const districtsLayerView = await view.whenLayerView(districtsLayer) as esri.FeatureLayerView;
 
   const layerStats = await queryLayerStatistics(layer);
   updateGrid(layerStats, layerView);
-  
-  yearsElement.addEventListener("click", filterByYear);
-  const yearsNodes = document.querySelectorAll(`.year-item`);
-
-  function filterByYear (event: any) {
-    const selectedYear = event.target.getAttribute("data-year");
-    yearsNodes.forEach( (node:HTMLDivElement) => {
-      const year = node.innerText;
-      if(year !== selectedYear){
-        if(node.classList.contains("visible-year")) {
-          node.classList.remove("visible-year");
-        }
-      } else {
-        if(!node.classList.contains("visible-year")) {
-          node.classList.add("visible-year");
-        }
-      }
-    });
-
-    layerView.filter = new FeatureFilter({
-      where: `Year = '${selectedYear}'`
-    });
-  }
 
   function resetOnCollapse (expanded:boolean) {
     if (!expanded){
@@ -109,7 +76,6 @@ import { months, years } from "./constants";
     }
   }
 
-  yearsExpand.watch("expanded", resetOnCollapse);
   chartExpand.watch("expanded", resetOnCollapse);
 
   let highlight:any = null;
@@ -120,7 +86,7 @@ import { months, years } from "./constants";
     event.stopPropagation();
 
     const hitResponse = await view.hitTest(event);
-    const hitResults = hitResponse.results.filter( hit => hit.graphic.layer === countiesLayer );
+    const hitResults = hitResponse.results.filter( hit => hit.graphic.layer === districtsLayer );
     if(hitResults.length > 0){
       const graphic = hitResults[0].graphic;
       if(previousId !== graphic.attributes.FID){
@@ -130,7 +96,7 @@ import { months, years } from "./constants";
           highlight = null;
         }
         
-        highlight = countiesLayerView.highlight([previousId]);
+        highlight = districtsLayerView.highlight([previousId]);
         const geometry = graphic && graphic.geometry;
         let queryOptions = {
           geometry,
@@ -163,12 +129,12 @@ import { months, years } from "./constants";
 
     query.outStatistics = [
       new StatisticDefinition({
-        onStatisticField: "Total_visits",
-        outStatisticFieldName: "total_visits_month",
+        onStatisticField: "Total_visits_dup",
+        outStatisticFieldName: "value",
         statisticType: "sum"
       })
     ];
-    query.groupByFieldsForStatistics = [ "YEAR + '-' + MonthName" ];
+    query.groupByFieldsForStatistics = [ "Year + '-' + MonthName" ];
     query.geometry = geometry;
     query.distance = distance;
     query.units = units;
@@ -193,12 +159,12 @@ import { months, years } from "./constants";
     const query = layer.createQuery();
     query.outStatistics = [
       new StatisticDefinition({
-        onStatisticField: "Total_visits",
-        outStatisticFieldName: "Total_visits_month",
+        onStatisticField: "Total_visits_dup",
+        outStatisticFieldName: "value",
         statisticType: "sum"
       })
     ];
-    query.groupByFieldsForStatistics = [ "YEAR + '-' + MonthName" ];
+    query.groupByFieldsForStatistics = [ "Year + '-' + MonthName" ];
 
     const queryResponse = await layer.queryFeatures(query);
 
@@ -247,9 +213,7 @@ import { months, years } from "./constants";
       highlight.remove();
       highlight = null;
     }
-    yearsNodes.forEach( (node:HTMLDivElement) => {
-      node.classList.add("visible-year");
-    });
+    
     updateGrid(layerStats, layerView, true);
   }
 
