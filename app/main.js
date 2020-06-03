@@ -302,7 +302,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                       basemap: "gray-vector",
                       layers: [layer, districtsLayer]
                   });
-                  
+
                 //FOR LEGEND
                   legend = new Legend({
                     view: view,
@@ -313,8 +313,9 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             container: "legendDiv"
                         }
                     ]
-                });
-                view.ui.add(legend, "bottom-right");
+                  });
+                  view.ui.add(legend, "bottom-right");
+                  
                   view = new MapView({
                       map: map,
                       container: "viewDiv",
