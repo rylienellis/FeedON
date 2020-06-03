@@ -18,30 +18,6 @@ body, #viewDiv {
   height: 100%;
 }
 
-#years-filter {
-  height: 160px;
-  width: 100%;
-  background-color: white;
-  visibility: hidden;
-}
-
-.year-item {
-  background-color: rgba(50,50,50,0.5);
-  color: #fff;
-  margin: 1px;
-  width: 100%;
-  padding: 12px;
-  text-align: center;
-  vertical-align: baseline;
-  cursor: pointer;
-  height: 40px;
-}
-
-.visible-year {
-  color: #fff;
-  background-color: rgba(50,50,50,0.9);
-}
-
 .chart-widget {
   padding: 12px;
 }
@@ -84,17 +60,6 @@ body, #viewDiv {
 .row10 { grid-area: row10; }
 .row11 { grid-area: row11; }
 .row12 { grid-area: row12; }
-
-#titleDiv {
- padding: 10px;
- background-color: rgba(50,50,50,0.9);
- color: white;
-}
-#titleText {
-  font-size: 32pt;
-  font-weight: 600;
-  padding: 10px 5px 10px 5px;
-}
 
 #dataDescription {
   font-size: 12pt;
