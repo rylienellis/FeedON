@@ -194,7 +194,101 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                         portalItem: {
                             id: "c0912eeb4037463589798a0b44aadb88"
                         },
-                        popupTemplate: null,
+                        popupTemplate: {
+                          title: "{ENGLISH_NA} | {MonthName} {Year}",
+                          expressionInfos: [
+                            {
+                              // Tried this for the pie chart but still references "expression/private-rental"
+                             // name: "Private-Rental",
+                             // title: "Private Rental",
+                             // expression: "$feature.UniqueHousing_private_rental"
+                              name: "1in1000",
+                              title: "1in1000 Popup",
+                              expression: "Round((($feature.Cnt_perc)*10),1)"
+                            }
+                          ],
+                          content:[
+                            {
+                              type: "text",
+                              text:
+                                "In this electoral riding, {expression/1in1000} out of 1000 people accessed a food bank this month."
+                            },
+                            {
+                              type: "fields",
+                              fieldInfos: [
+                                {
+                                  fieldName: "Pop2016",
+                                  label: "Total Population (2016)",
+                                  format: {
+                                    digitSeparator: true,
+                                    places: 0
+                                  }
+                                },
+                                {
+                                  fieldName: "Total_visits_dup",
+                                  label: "Total visits to a food bank",
+                                  format: {
+                                    digitSeparator: true,
+                                    places: 0
+                                  }
+                                },
+                                {
+                                  fieldName: "UniqueMonth_cnt",
+                                  label: "Total unique individual visits",
+                                  format: {
+                                    digitSeparator: true,
+                                    places: 0
+                                  }
+                                },
+                                {
+                                  fieldName: "DupMonth_adults",
+                                  label: "Adults",
+                                  format: {
+                                    digitSeparator: true,
+                                    places: 0
+                                  }
+                                },
+                                {
+                                  fieldName: "DupMonth_children",
+                                  label: "Children",
+                                  format: {
+                                    digitSeparator: true, 
+                                    places: 0
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              type: "media", //MediaContentElement for chart
+                              mediaInfos:[
+                                {
+                                  title: "<b>Housing</b>",
+                                  type: "pie-chart",
+                                  caption: "",
+                                  value: {
+                                    fields: ["UniqueHousing_own_home", "UniqueHousing_private_rental", "UniqueHousing_band_owned", "UniqueHousing_emergency_shelter", "UniqueHousing_youth_home_shelter", "UniqueHousing_on_the_street", "UniqueHousing_rooming_house", "UniqueHousing_social_housing", "UniqueHousing_with_family_friends", "UniqueHousing_unknown"]
+
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              type: "media",
+                              mediaInfos: [
+                                {
+                                  title: "<b> Primary Source of Income</b>",
+                                  type: "pie-chart",
+                                  caption: "",
+                                  theme: "PlotKit.purple",
+                                  value: {
+                                    fields: [ "UniqueIncome_canada_child_benefit", "UniqueIncome_disability_benefits", "UniqueIncome_employment_income", "UniqueIncome_employment_insurance", "UniqueIncome_no_income", "UniqueIncome_pension", "UniqueIncome_provincial_disability", "UniqueIncome_social_assistance", "UniqueIncome_student_loan", "UniqueIncome_unknown" ]
+
+                                  }
+                                }
+                              ]
+                            }     
+                          ]
+                        },
                         opacity: 0,
                         renderer: new renderers_1.SimpleRenderer({
                             symbol: new symbols_1.SimpleFillSymbol({
