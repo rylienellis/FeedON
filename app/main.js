@@ -260,8 +260,8 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                   type: "pie-chart",
                                   caption: "",
                                   value: {
-                                    fields: ["UniqueHousing_own_home", "UniqueHousing_private_rental", "UniqueHousing_band_owned", "UniqueHousing_emergency_shelter", "UniqueHousing_youth_home_shelter", "UniqueHousing_on_the_street", "UniqueHousing_rooming_house", "UniqueHousing_social_housing", "UniqueHousing_with_family_friends", "UniqueHousing_unknown"]
-
+                                    fields: ["Own Home", "Private Rental", "Band Owned", "Emergency Shelter", "Youth Home/Shelter", "On the Street", "Rooming House", "Social Housing", "Family/Friends", "Unknown"]
+                                    // fields: ["UniqueHousing_own_home", "UniqueHousing_private_rental", "UniqueHousing_band_owned", "UniqueHousing_emergency_shelter", "UniqueHousing_youth_home_shelter", "UniqueHousing_on_the_street", "UniqueHousing_rooming_house", "UniqueHousing_social_housing", "UniqueHousing_with_family_friends", "UniqueHousing_unknown"]
                                   }
                                 }
                               ]
