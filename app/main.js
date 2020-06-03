@@ -179,7 +179,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
           }
           heatmapChart_1.updateGrid(layerStats, layerView, true);
       }
-      var layer, districtsLayer, map, legend, view, chartExpand, layerView, districtsLayerView, layerStats, highlight, previousId, resetBtn;
+      var layer, districtsLayer, map, mapList, view, chartExpand, layerView, districtsLayerView, layerStats, highlight, previousId, resetBtn, legend,;
       return __generator(this, function (_a) {
           switch (_a.label) {
               case 0:
@@ -303,19 +303,6 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                       layers: [layer, districtsLayer]
                   });
 
-                //FOR LEGEND
-                  legend = new Legend({
-                    view: view,
-                    layerInfos: [
-                        {
-                            layer: layer,
-                            title: "Food Bank Usage",
-                            container: "legendDiv"
-                        }
-                    ]
-                  });
-                  view.ui.add(legend, "bottom-right");
-
                   view = new MapView({
                       map: map,
                       container: "viewDiv",
@@ -354,7 +341,21 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                   resetBtn = document.getElementById("resetBtn");
                   resetBtn.addEventListener("click", resetVisuals);
                   return [2 /*return*/];
+                  
+                //FOR LEGEND
+                  legend = new Legend({
+                    view: view,
+                    layerInfos: [
+                        {
+                            layer: layer,
+                            title: "Food Bank Usage",
+                            container: "legendDiv"
+                        }
+                    ]
+                  });
+                  view.ui.add(legend, "bottom-right");
           }
       });
   }); })();
 });
+
