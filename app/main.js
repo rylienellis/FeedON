@@ -260,7 +260,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                   type: "pie-chart",
                                   caption: "",
                                   value: {
-                                    fields: ["UniqueHousing_own_home", "UniqueHousing_private_rental", "UniqueHousing_band_owned", "UniqueHousing_emergency_shelter", "UniqueHousing_youth_home_shelter", "UniqueHousing_on_the_street", "UniqueHousing_rooming_house", "UniqueHousing_social_housing", "UniqueHousing_with_family_friends", "UniqueHousing_unknown"]
+                                    fields: ["Band_Owned", "Emergency_Shelter", "On_the_Street", "Rooming_House", "Own_Home", "Private_Rental", "Social_Housing", "Family_or_Friends", "Youth_Home_Shelter", "Unknown_Housing"]
                                   }
                                 }
                               ]
@@ -272,9 +272,8 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                   title: "<b> Primary Source of Income</b>",
                                   type: "pie-chart",
                                   caption: "",
-                                  theme: "PlotKit.purple",
                                   value: {
-                                    fields: [ "UniqueIncome_canada_child_benefit", "UniqueIncome_disability_benefits", "UniqueIncome_employment_income", "UniqueIncome_employment_insurance", "UniqueIncome_no_income", "UniqueIncome_pension", "UniqueIncome_provincial_disability", "UniqueIncome_social_assistance", "UniqueIncome_student_loan", "UniqueIncome_unknown" ]
+                                    fields: [ "Canada_Child_Benefit", "Disability_Benefits", "Employment", "Employment_Insurance", "No_Income", "Pension", "Provincial_Disability", "Social_Assistance", "Student_Loan", "Unknown_Income" ]
 
                                   }
                                 }
