@@ -279,7 +279,6 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                   title: "<b> Primary Source of Income</b>",
                                   type: "pie-chart",
                                   caption: "",
-                                  theme: "PlotKit.purple",
                                   value: {
                                     fields: [ "UniqueIncome_canada_child_benefit", "UniqueIncome_disability_benefits", "UniqueIncome_employment_income", "UniqueIncome_employment_insurance", "UniqueIncome_no_income", "UniqueIncome_pension", "UniqueIncome_provincial_disability", "UniqueIncome_social_assistance", "UniqueIncome_student_loan", "UniqueIncome_unknown" ]
 
