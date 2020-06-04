@@ -16,6 +16,23 @@
           }
         ]
       };
+      require([
+        "esri/widget/Legend"
+      ], function(Legend) {
+        var legend = new Legend({
+          view: view,
+          layerInfos: [
+            {
+              // CHANGE THIS DEPENDING ON LAYER YOU WANT TO SYMBOLOIZE
+              // Will have to go into the layer in AGOL and re-symbolize with string values
+              layer: layer,
+              title: "Food Bank Usage",
+              container: "legendDiv"
+             }
+          ]
+        });
+        view.ui.add(legend, "bottom-right");
+      });    
     </script>
     <script src="https://js.arcgis.com/4.11"></script>
   </head>
