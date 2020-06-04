@@ -179,7 +179,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
             }
             heatmapChart_1.updateGrid(layerStats, layerView, true);
         }
-        var layer, districtsLayer, map, mapList, view, chartExpand, layerView, districtsLayerView, layerStats, highlight, previousId, resetBtn;
+        var layer, districtsLayer, map, view, chartExpand, layerView, districtsLayerView, layerStats, highlight, previousId, resetBtn;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
