@@ -16,6 +16,25 @@
           }
         ]
       };
+      require([
+        "esri/layers/FeatureLayer",
+        "esri/widget/Legend"
+      ], function(MonthlyLayer, Legend) {
+        var monthly = new MonthlyLayer({
+          portalItem: {
+            id: "c0912eeb4037463589798a0b44aadb88"
+          }
+        });
+        var legend = new Legend({
+          layerInfos: [
+            {
+              layer: monthly,
+              title: "Food Bank Usage",
+              container: "legendDiv"
+            }
+          ]
+        });
+        view.ui.add(legend, "bottom-right");
     </script>
     <script src="https://js.arcgis.com/4.11"></script>
   </head>
