@@ -345,6 +345,21 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
             }
         });
     }); })();
+    require([
+        "esri/widgets/Legend"
+    ], function(Legend){
+        var legend = new Legend({
+            view: view,
+            layerInfos: [
+                {
+                    layer: layer,
+                    title: "Food Bank Usage",
+                    container: "legendDiv"
+                }
+            ]
+        });
+        view.ui.add(legend, "bottom-right"); 
+    });
 });
 //# sourceMappingURL=main.js.map
 
