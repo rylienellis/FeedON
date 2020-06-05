@@ -352,7 +352,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
             view: view,
             layerInfos: [
                 {
-                    layer: layer,
+                    layer: districtsLayer,
                     title: "Food Bank Usage",
                     container: "legendDiv"
                 }
