@@ -299,7 +299,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                     });
                     
                     map = new EsriMap({
-                        basemap: "gray-vector",
+                        basemap: "gray",
                         layers: [layer, districtsLayer]
                     });
 
