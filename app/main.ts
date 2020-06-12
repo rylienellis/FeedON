@@ -3,6 +3,7 @@ import esri = __esri;
 import EsriMap = require("esri/Map");
 import MapView = require("esri/views/MapView");
 import FeatureLayer = require("esri/layers/FeatureLayer");
+import Legend = require("esri/widgets/Legend");
 import FeatureFilter = require("esri/views/layers/support/FeatureFilter");
 import FeatureEffect = require("esri/views/layers/support/FeatureEffect");
 import StatisticDefinition = require("esri/tasks/support/StatisticDefinition");
@@ -12,21 +13,294 @@ import { SimpleRenderer } from "esri/renderers";
 import { updateGrid } from "./heatmapChart";
 
 import Expand = require("esri/widgets/Expand");
+import Search = require("esri/widgets/Search");
 import { months, years } from "./constants";
 
 ( async () => {
-
+  const northernLayer = new FeatureLayer({
+      portalItem: {
+          id: "0be94b8c12f646ba840a3b4bb5b20b2e"
+      },
+      outFields: ["*"],
+      popupTemplate: {
+          title: "{ENGLISH_NA}",
+          content:[
+            {
+              type: "text",
+              text:
+                "Due to insufficient data, food bank use in the ridings of Kiiwetinoong, Mushkegowuk-James Bay, and Kenora-Rainy River, were not accurately reflected on this map. Northern food insecurity is both complex and a crisis in Ontario and across Canada. Northern food banks do provide service to these remote areas; however, the numbers reported are significantly lower than the number of people served or requiring support."
+            }]
+        }
+  }); 
+  
   const layer = new FeatureLayer({
     portalItem: {
-      id: "c0912eeb4037463589798a0b44aadb88"
+      id: "276c8a6d3c51441d9d2d4ff9475e88b9"
     },
-    outFields: [ "MonthName", "Year" ]
+    outFields: [ "*" ],
+    popupTemplate: {
+      title: "{ENGLISH_NA} | {MonthName} {Year}",
+      expressionInfos: [
+        {
+          // Tried this for the pie chart but still references "expression/private-rental"
+         // name: "Private-Rental",
+         // title: "Private Rental",
+         // expression: "$feature.UniqueHousing_private_rental"
+          name: "1in1000",
+          title: "1in1000 Popup",
+          expression: "Round((($feature.Cnt_perc)*10),1)",
+          fieldInfos: [
+          //the following sets will ensure that the income and housing field names appear as their designated LABEL in pie chart
+          {
+            fieldName: "Band_Owned",
+            label: "Band Owned",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Emergency_Shelter",
+            label: "Emergency Shelter",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "On_the_Street",
+            label: "On the Street",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Rooming_House",
+            label: "Rooming House",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Own_Home",
+            label: "Own Home",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Private_Rental",
+            label: "Private Rental",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Social_Housing",
+            label: "Social Housing",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Family_or_Friends",
+            label: "Family or Friends",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Youth_Home_Shelter",
+            label: "Youth Home Shelter",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Unknown_Housing",
+            label: "Unknown Housing",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Canada_Child_Benefit",
+            label: "Canada Child Benefit",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Disability_Benefits",
+            label: "Disability Benefits",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Employment",
+            label: "Employment",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Employment_Insurance",
+            label: "Employment Insurance",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "No_Income",
+            label: "No Income",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Pension",
+            label: "Pension",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Provincial_Disability",
+            label: "Provincial Disability",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Social_Assistance",
+            label: "Social Assistance",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Student_Loan",
+            label: "Student Loan",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          },
+          {
+            fieldName: "Unknown_Income",
+            label: "Unknown Income",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }
+          ]
+        }
+      ],
+      content:[
+        {
+          type: "text",
+          text:
+            "In this electoral riding, {expression/1in1000} out of 1000 people accessed a food bank this month."
+        },
+        {
+          type: "fields",
+          fieldInfos: [
+            {
+              fieldName: "Pop2016",
+              label: "Total Population (2016)",
+              format: {
+                digitSeparator: true,
+                places: 0
+              }
+            },
+            {
+              fieldName: "UniqueMonth_cnt",
+              label: "Total unique individuals",
+              format: {
+                digitSeparator: true,
+                places: 0
+              }
+            },
+            {	
+              fieldName: "DupMonth_adults",	
+              label: "Total visits (adults)",	
+              format: {	
+                digitSeparator: true,	
+                places: 0	
+              }	
+            },	
+            {	
+              fieldName: "DupMonth_children",	
+              label: "Total visits (children)",	
+              format: {	
+                digitSeparator: true, 	
+                places: 0	
+              }	
+            },
+            {
+              fieldName: "Total_visits_dup",
+              label: "Total visits (adults + children)",
+              format: {
+                digitSeparator: true,
+                places: 0
+              }
+            }
+          ]
+        },
+        {
+          type: "media", //MediaContentElement for chart
+          mediaInfos:[
+            {
+              title: "<b>Housing</b>",
+              type: "pie-chart",
+              caption: "",
+              value: {
+                fields: ["Band_Owned", "Emergency_Shelter", "On_the_Street", "Rooming_House", "Own_Home", "Private_Rental", "Social_Housing", "Family_or_Friends", "Youth_Home_Shelter", "Unknown_Housing"],
+                normalizeField: null
+              }
+            }
+          ]
+        },
+        {
+          type: "media",
+          mediaInfos: [
+            {
+              title: "<b> Primary Source of Income</b>",
+              type: "pie-chart",
+              caption: "",
+              value: {
+                fields: [ "Canada_Child_Benefit", "Disability_Benefits", "Employment", "Employment_Insurance", "No_Income", "Pension", "Provincial_Disability", "Social_Assistance", "Student_Loan", "Unknown_Income"],
+                normalizeField: null
+              }
+            }
+          ]
+        }     
+      ]
+    }
   });
 
   const districtsLayer = new FeatureLayer({
     title: "districts",
     portalItem: {
-      id: "c0912eeb4037463589798a0b44aadb88"
+      id: "276c8a6d3c51441d9d2d4ff9475e88b9"
     },
     popupTemplate: null,
     opacity: 0,
@@ -39,20 +313,39 @@ import { months, years } from "./constants";
   });
 
   const map = new EsriMap({
-    basemap: "gray-vector",
-    layers: [ layer, districtsLayer ]
+    basemap: "gray",
+    layers: [ northernLayer, layer, districtsLayer ]
   });
 
   const view = new MapView({
     map: map,
     container: "viewDiv",
     center: [ -85, 50 ],
-    zoom: 4.5,
+    zoom: 5,
     highlightOptions: {
-      color: "#262626",
+      color: "#00AEC7",
       haloOpacity: 1,
       fillOpacity: 0
     }
+  });
+  
+    const legend = new Expand({
+        content: new Legend({
+            view: view,
+            layerInfos: [
+                {
+                    layer: layer,
+                    title: "Food Bank Use by Electoral Riding"
+                }
+            ]
+        }),
+        view: view,
+        expanded: true
+    });
+  
+  const search = new Search({
+    view: view,
+    locationEnabled: false
   });
 
   await view.when();
@@ -61,8 +354,11 @@ import { months, years } from "./constants";
     content: document.getElementById("chartDiv"),
     expandIconClass: "esri-icon-chart",
     group: "top-left"
+    expanded: true
   });
   view.ui.add(chartExpand, "top-left");
+  view.ui.add(search, "top-right");
+  view.ui.add(legend, "bottom-right");
 
   const layerView = await view.whenLayerView(layer) as esri.FeatureLayerView;
   const districtsLayerView = await view.whenLayerView(districtsLayer) as esri.FeatureLayerView;
@@ -129,7 +425,7 @@ import { months, years } from "./constants";
 
     query.outStatistics = [
       new StatisticDefinition({
-        onStatisticField: "Total_visits_dup",
+        onStatisticField: "UniqueMonth_cnt",
         outStatisticFieldName: "value",
         statisticType: "sum"
       })
@@ -159,7 +455,7 @@ import { months, years } from "./constants";
     const query = layer.createQuery();
     query.outStatistics = [
       new StatisticDefinition({
-        onStatisticField: "Total_visits_dup",
+        onStatisticField: "UniqueMonth_cnt",
         outStatisticFieldName: "value",
         statisticType: "sum"
       })
