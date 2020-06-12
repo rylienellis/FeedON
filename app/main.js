@@ -33,7 +33,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/views/layers/support/FeatureFilter", "esri/views/layers/support/FeatureEffect", "esri/tasks/support/StatisticDefinition", "esri/symbols", "esri/renderers", "./heatmapChart", "esri/widgets/Expand", "./constants"], function (require, exports, EsriMap, MapView, FeatureLayer, FeatureFilter, FeatureEffect, StatisticDefinition, symbols_1, renderers_1, heatmapChart_1, Expand, constants_1) {
+define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Legend","esri/views/layers/support/FeatureFilter", "esri/views/layers/support/FeatureEffect", "esri/tasks/support/StatisticDefinition", "esri/symbols", "esri/renderers", "./heatmapChart", "esri/widgets/Expand", "esri/widgets/Search", "./constants"], function (require, exports, EsriMap, MapView, FeatureLayer, Legend, FeatureFilter, FeatureEffect, StatisticDefinition, symbols_1, renderers_1, heatmapChart_1, Expand, Search, constants_1) {
     "use strict";
     var _this = this;
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -93,7 +93,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             query = layerView.layer.createQuery();
                             query.outStatistics = [
                                 new StatisticDefinition({
-                                    onStatisticField: "Total_visits_dup",
+                                    onStatisticField: "UniqueMonth_cnt",
                                     outStatisticFieldName: "value",
                                     statisticType: "sum"
                                 })
@@ -130,7 +130,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             query = layer.createQuery();
                             query.outStatistics = [
                                 new StatisticDefinition({
-                                    onStatisticField: "Total_visits_dup",
+                                    onStatisticField: "UniqueMonth_cnt",
                                     outStatisticFieldName: "value",
                                     statisticType: "sum"
                                 })
@@ -179,13 +179,29 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
             }
             heatmapChart_1.updateGrid(layerStats, layerView, true);
         }
-        var layer, districtsLayer, map, view, chartExpand, layerView, districtsLayerView, layerStats, highlight, previousId, resetBtn;
+        var northernLayer, layer, districtsLayer, map, mapList, view, legend, search, chartExpand, northernLayerView, layerView, districtsLayerView, layerStats, highlight, previousId, resetBtn;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    northernLayer = new FeatureLayer({
+                        portalItem: {
+                            id: "0be94b8c12f646ba840a3b4bb5b20b2e"
+                        },
+                        outFields: ["*"],
+                        popupTemplate: {
+                            title: "{ENGLISH_NA}",
+                            content:[
+                              {
+                                type: "text",
+                                text:
+                                  "Due to insufficient data, food bank use in the ridings of Kiiwetinoong, Mushkegowuk-James Bay, and Kenora-Rainy River, were not accurately reflected on this map. Northern food insecurity is both complex and a crisis in Ontario and across Canada. Northern food banks do provide service to these remote areas; however, the numbers reported are significantly lower than the number of people served or requiring support."
+                              }]
+                          }
+                    }); 
+                    
                     layer = new FeatureLayer({
                         portalItem: {
-                            id: "c0912eeb4037463589798a0b44aadb88"
+                            id: "276c8a6d3c51441d9d2d4ff9475e88b9"
                         },
                         outFields: ["*"],
                         popupTemplate: {
@@ -201,6 +217,169 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                               expression: "Round((($feature.Cnt_perc)*10),1)"
                             }
                           ],
+                          fieldInfos: [
+                          //the following sets will ensure that the income and housing field names appear as their designated LABEL in pie chart
+                          {
+                            fieldName: "Band_Owned",
+                            label: "Band Owned",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Emergency_Shelter",
+                            label: "Emergency Shelter",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "On_the_Street",
+                            label: "On the Street",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Rooming_House",
+                            label: "Rooming House",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Own_Home",
+                            label: "Own Home",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Private_Rental",
+                            label: "Private Rental",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Social_Housing",
+                            label: "Social Housing",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Family_or_Friends",
+                            label: "Family or Friends",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Youth_Home_Shelter",
+                            label: "Youth Home Shelter",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Unknown_Housing",
+                            label: "Unknown Housing",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Canada_Child_Benefit",
+                            label: "Canada Child Benefit",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Disability_Benefits",
+                            label: "Disability Benefits",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Employment",
+                            label: "Employment",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Employment_Insurance",
+                            label: "Employment Insurance",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "No_Income",
+                            label: "No Income",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Pension",
+                            label: "Pension",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Provincial_Disability",
+                            label: "Provincial Disability",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Social_Assistance",
+                            label: "Social Assistance",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Student_Loan",
+                            label: "Student Loan",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          },
+                          {
+                            fieldName: "Unknown_Income",
+                            label: "Unknown Income",
+                            format: {
+                              digitSeparator: true,
+                              places: 0
+                            }
+                          }
+                          ],  
                           content:[
                             {
                               type: "text",
@@ -219,34 +398,34 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                   }
                                 },
                                 {
-                                  fieldName: "Total_visits_dup",
-                                  label: "Total visits to a food bank",
-                                  format: {
-                                    digitSeparator: true,
-                                    places: 0
-                                  }
-                                },
-                                {
                                   fieldName: "UniqueMonth_cnt",
-                                  label: "Total unique individual visits",
+                                  label: "Total unique individuals",
                                   format: {
                                     digitSeparator: true,
                                     places: 0
                                   }
                                 },
-                                {
-                                  fieldName: "DupMonth_adults",
-                                  label: "Adults",
-                                  format: {
-                                    digitSeparator: true,
-                                    places: 0
-                                  }
+                                {	
+                                  fieldName: "DupMonth_adults",	
+                                  label: "Total visits (adults)",	
+                                  format: {	
+                                    digitSeparator: true,	
+                                    places: 0	
+                                  }	
+                                },	
+                                {	
+                                  fieldName: "DupMonth_children",	
+                                  label: "Total visits (children)",	
+                                  format: {	
+                                    digitSeparator: true, 	
+                                    places: 0	
+                                  }	
                                 },
                                 {
-                                  fieldName: "DupMonth_children",
-                                  label: "Children",
+                                  fieldName: "Total_visits_dup",
+                                  label: "Total visits (adults + children)",
                                   format: {
-                                    digitSeparator: true, 
+                                    digitSeparator: true,
                                     places: 0
                                   }
                                 }
@@ -286,7 +465,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                     districtsLayer = new FeatureLayer({
                         title: "districts",
                         portalItem: {
-                            id: "c0912eeb4037463589798a0b44aadb88"
+                            id: "276c8a6d3c51441d9d2d4ff9475e88b9"
                         },
                         popupTemplate: null,
                         opacity: 0,
@@ -300,19 +479,36 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                     
                     map = new EsriMap({
                         basemap: "gray",
-                        layers: [layer, districtsLayer]
+                        layers: [northernLayer, layer, districtsLayer]
                     });
 
                     view = new MapView({
                         map: map,
                         container: "viewDiv",
                         center: [-87, 50],
-                        zoom: 4.5,
+                        zoom: 5,
                         highlightOptions: {
-                            color: "#262626",
+                            color: "#00AEC7",
                             haloOpacity: 1,
                             fillOpacity: 0
                         }
+                    });
+                        legend = new Expand({
+                            content: new Legend({
+                                view: view,
+                                layerInfos: [
+                                    {
+                                        layer: layer,
+                                        title: "Food Bank Use by Electoral Riding"
+                                    }
+                                ]
+                            }),
+                            view: view,
+                            expanded: true
+                        });
+                    search = new Search({
+                        view: view,
+                        locationEnabled: false
                     });
                     
                     return [4 /*yield*/, view.when()];
@@ -322,9 +518,12 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                         view: view,
                         content: document.getElementById("chartDiv"),
                         expandIconClass: "esri-icon-chart",
-                        group: "top-left"
+                        group: "top-left",
+                        expanded: true
                     });
                     view.ui.add(chartExpand, "top-left");
+                    view.ui.add(search, "top-right");
+                    view.ui.add(legend, "bottom-right");
                     return [4 /*yield*/, view.whenLayerView(layer)];
                 case 2:
                     layerView = _a.sent();
@@ -345,21 +544,5 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
             }
         });
     }); })();
-    require([
-        "esri/widgets/Legend"
-    ], function(Legend){
-        var legend = new Legend({
-            view: view,
-            layerInfos: [
-                {
-                    layer: districtsLayer,
-                    title: "Food Bank Usage",
-                    container: "legendDiv"
-                }
-            ]
-        });
-        view.ui.add(legend, "bottom-right"); 
-    });
 });
 //# sourceMappingURL=main.js.map
-
