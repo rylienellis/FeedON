@@ -432,10 +432,15 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                               ]
                             },
                             {
+                              type: "text",
+                              text:
+                                "<b>HOUSING<b>."
+                            },
+                            {
                               type: "media", //MediaContentElement for chart
                               mediaInfos:[
                                 {
-                                  title: "<b>Housing</b>",
+                                  title: "",
                                   type: "pie-chart",
                                   caption: "",
                                   value: {
@@ -446,10 +451,15 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                               ]
                             },
                             {
+                              type: "text",
+                              text:
+                                "<b>PRIMARY INCOME<b>"
+                            },
+                            {
                               type: "media",
                               mediaInfos: [
                                 {
-                                  title: "<b> Primary Source of Income</b>",
+                                  title: "",
                                   type: "pie-chart",
                                   caption: "",
                                   value: {
