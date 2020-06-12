@@ -6,15 +6,12 @@ body, #viewDiv {
   width: 100%;
 }
 
-#infoDiv{
-  background-color: white;
-  padding: 10px;
-  max-height: 300px;
-  overflow: auto;
+p {	
+  margin: 10px 0 0 0;	
 }
 
 #chartDiv {
-  padding: 10px;
+  padding: 5px;
   background-color: white;
 }
 
@@ -30,8 +27,8 @@ body, #viewDiv {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: 60px 70px 70px 70px 70px;
-  grid-template-rows: 40px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  grid-template-columns: 50px 60px 60px 60px 60px;
+  grid-template-rows: 35px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
   grid-template-areas: ". col1 col2 col3 col4" "row-label1 canvas canvas canvas canvas" "row-label2 canvas canvas canvas canvas " "row3 canvas canvas canvas canvas" "row4 canvas canvas canvas canvas" "row5 canvas canvas canvas canvas" "row6 canvas canvas canvas canvas" "row7 canvas canvas canvas canvas" "row8 canvas canvas canvas canvas" "row9 canvas canvas canvas canvas" "row10 canvas canvas canvas canvas" "row11 canvas canvas canvas canvas" "row12 canvas canvas canvas canvas";
 
   justify-items: stretch;
