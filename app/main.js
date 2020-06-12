@@ -434,7 +434,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                             {
                               type: "text",
                               text:
-                                "<b>HOUSING<b>."
+                                "<b>HOUSING<b>"
                             },
                             {
                               type: "media", //MediaContentElement for chart
