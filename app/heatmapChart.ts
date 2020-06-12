@@ -10,8 +10,8 @@ let layerView: esri.FeatureLayerView = null;
 
 let data: ChartData[] = [];
 
-const start = new Color("#FCFBFD");
-const end = new Color("#3F007D");
+const start = new Color("#F2F2F2");
+const end = new Color("#72246C");
 const numCols = 4;
 const numRows = 12;
 
@@ -58,7 +58,7 @@ export function updateGrid(newData?: ChartData[], lv?: esri.FeatureLayerView, cl
 
     // Draw text
     ctx.fillStyle = "white";
-    ctx.strokeStyle = "#3F007D";
+    ctx.strokeStyle = "#72246C";
     // ctx.fill
     ctx.lineWidth = 4;
     ctx.textBaseline = "middle";
