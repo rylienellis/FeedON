@@ -399,7 +399,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                 },
                                 {
                                   fieldName: "UniqueMonth_cnt",
-                                  label: "Total unique individuals",
+                                  label: "Unique Individual Visitors",
                                   format: {
                                     digitSeparator: true,
                                     places: 0
@@ -407,7 +407,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                 },
                                 {	
                                   fieldName: "DupMonth_adults",	
-                                  label: "Total visits (adults)",	
+                                  label: "Adult Visitors",	
                                   format: {	
                                     digitSeparator: true,	
                                     places: 0	
@@ -415,7 +415,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                 },	
                                 {	
                                   fieldName: "DupMonth_children",	
-                                  label: "Total visits (children)",	
+                                  label: "Children Visitors",	
                                   format: {	
                                     digitSeparator: true, 	
                                     places: 0	
@@ -423,7 +423,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                 },
                                 {
                                   fieldName: "Total_visits_dup",
-                                  label: "Total visits (adults + children)",
+                                  label: "Total Visits",
                                   format: {
                                     digitSeparator: true,
                                     places: 0
