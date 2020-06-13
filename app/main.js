@@ -468,7 +468,12 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                   }
                                 }
                               ]
-                            }     
+                            },
+                            {
+                              type: "text",
+                              text:
+                                "Note: Hover over bars to see hosuing and income categories"
+                            }
                           ]
                         }
                     });
